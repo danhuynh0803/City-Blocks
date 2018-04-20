@@ -14,22 +14,46 @@ public class MainMenu : MonoBehaviour {
 
     public Stack<GameObject> menuStack;
 
+    private bool isPaused;
 
     void Start()
     {
+        isPaused = false;
         menuStack = new Stack<GameObject>();
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
+            // Close any open windows that is NOT the main pause menu
             if (menuStack.Count > 0)
             {
                 GameObject frontMenu = menuStack.Peek();
                 frontMenu.SetActive(false);
                 menuStack.Pop();
             }
+            // If only the pause menu is open, this allows players to exit by clicking escape
+            else if (menuStack.Count == 0 && isPaused)
+            {
+                isPaused = false;
+            }
+            // Opens the pause menu using escape
+            else if (menuStack.Count == 0 && !isPaused)
+            {
+                isPaused = true;
+            }
+        }
+
+        // Handle opening/closing of pause menu
+        if (isPaused)
+        {
+            Pause();
+        }
+        else
+        {
+            Resume();
         }
     }
+
     public void LoadMainMenuScene()
     {
         loadingScreen.SetActive(true);
@@ -39,6 +63,22 @@ public class MainMenu : MonoBehaviour {
     public void LoadStage1Scene()
     {
         SceneManager.LoadScene("Stage1", LoadSceneMode.Single);
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0.0f;
+        pauseMenu.SetActive(true);
+    }
+    public void Restart(string stageName)
+    {
+        SceneManager.LoadScene(stageName, LoadSceneMode.Single);
+    }
+    public void Resume()
+    {
+        isPaused = false;
+        Time.timeScale = 1.0f;
+        pauseMenu.SetActive(false);
     }
 
     public void ToggleControlMenu(bool boolean)
