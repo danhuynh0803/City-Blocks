@@ -5,22 +5,25 @@ using System.Collections;
 public class ScoreController : MonoBehaviour
 {
     private static int score;                   // Player 1's score
-    private static int highScore;               // Current high score, resets if program is turned off
+    private static int highscore;               // Current high score, resets if program is turned off
 
-    public Text p1ScoreText;
-    public Text p1ScoreShadowText;
-    public Text p2ScoreText;
-    public Text p2ScoreShadowText;
+    public Text scoreText;
+    public Text scoreShadowText;
+    public Text highscoreText;
+    public Text highscoreShadowText;
 
-    void Start()
+    void Awake()
     {
         score = 0;
+        highscore = 0;
     }
 
     void Update()
     {
-        p1ScoreText.text = "Score: " + ScoreController.score;               // Display player1's score
-        p1ScoreShadowText.text = "Score: " + ScoreController.score;         // Display the black highlight around score
+        scoreText.text = "Score: " + score;               // Display score
+        scoreShadowText.text = "Score: " + score;         // Display the black highlight around score
+        highscoreText.text = "High Score: " + highscore;       // Display highscore
+        highscoreShadowText.text = "High Score: " + highscore; // Display the black highlight around highscore
     }
 
     public static void RestartScore()
@@ -40,12 +43,12 @@ public class ScoreController : MonoBehaviour
 
     public static int getScore()
     {
-        return ScoreController.score;
+        return score;
     }
 
     public static bool isHighScore()
     {
-        if (ScoreController.score > ScoreController.highScore)
+        if (score > highscore)
         {
             return true;
         }
@@ -54,7 +57,7 @@ public class ScoreController : MonoBehaviour
 
     public static void updateHighScore()
     {
-        ScoreController.highScore = ScoreController.score;
+        highscore = score;
     }
 }
 

@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour {
 
     public GameObject controlMenu;
     public GameObject soundMenu;
-    public GameObject credit;
+    public GameObject creditMenu;
     public GameObject loadingScreen;
     [Header("In Game Only")]
     public GameObject pauseMenu;
@@ -56,19 +56,28 @@ public class MainMenu : MonoBehaviour {
 
     public void LoadMainMenuScene()
     {
-        loadingScreen.SetActive(true);
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        if (loadingScreen != null)
+        {
+            loadingScreen.SetActive(true);
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
     }
 
     public void LoadStage1Scene()
     {
-        SceneManager.LoadScene("Stage1", LoadSceneMode.Single);
+        if (loadingScreen != null)
+        {
+            SceneManager.LoadScene("Stage1", LoadSceneMode.Single);
+        }
     }
 
     public void Pause()
     {
-        Time.timeScale = 0.0f;
-        pauseMenu.SetActive(true);
+        if (pauseMenu != null)
+        {
+            Time.timeScale = 0.0f;
+            pauseMenu.SetActive(true);
+        }
     }
     public void Restart(string stageName)
     {
@@ -83,27 +92,36 @@ public class MainMenu : MonoBehaviour {
 
     public void ToggleControlMenu(bool boolean)
     {
-        if (boolean)
-            menuStack.Push(controlMenu);
-        else
-            menuStack.Pop(); 
-        controlMenu.SetActive(boolean);
+        if (controlMenu != null)
+        {
+            if (boolean)
+                menuStack.Push(controlMenu);
+            else
+                menuStack.Pop();
+            controlMenu.SetActive(boolean);
+        }
     }
     public void ToggleSoundlMenu(bool boolean)
     {
-        if (boolean)
-            menuStack.Push(soundMenu);
-        else
-            menuStack.Pop();
-        soundMenu.SetActive(boolean);
+        if (soundMenu != null)
+        {
+            if (boolean)
+                menuStack.Push(soundMenu);
+            else
+                menuStack.Pop();
+            soundMenu.SetActive(boolean);
+        }
     }
     public void ToggleCredit(bool boolean)
     {
-        if (boolean)
-            menuStack.Push(credit);
-        else
-            menuStack.Pop();
-        credit.SetActive(boolean);
+        if (creditMenu != null)
+        {
+            if (boolean)
+                menuStack.Push(creditMenu);
+            else
+                menuStack.Pop();
+            creditMenu.SetActive(boolean);
+        }
     }
 
     public void ExitGame()
