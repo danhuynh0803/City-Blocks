@@ -7,7 +7,7 @@ public class Word
 {
     public string word;
     private int currentTypedIndex;  // Used to check if the next letter matches what we type 
-
+   
     WordDisplay display;
 
     public Word (string word, WordDisplay display)
@@ -43,4 +43,10 @@ public class Word
 
         return wordTyped;
     }
+
+    private void powerup()
+    {
+
+    }
+
 }

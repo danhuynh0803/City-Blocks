@@ -8,6 +8,12 @@ public class WordDisplay : MonoBehaviour {
     public Text text;
     public Text shadowText;
     public float fallSpeed = 500.0f;
+    public float destroyTimer = 30.0f;      // Amount of time before the word disappeared
+
+    private void Start()
+    {
+        Destroy(this.gameObject, destroyTimer);
+    }
 
     // Set the text to display a word
     public void SetWordText(string word)

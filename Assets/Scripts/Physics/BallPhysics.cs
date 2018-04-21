@@ -14,13 +14,9 @@ public class BallPhysics : MonoBehaviour {
     }
     public void Kick()
     {
-        rigidBody.velocity = new Vector2(0f, speedY);
+        rigidBody.velocity = new Vector2(0f, -1 * speedY);
     }
     public void Bounce()
-    {
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
-    }
-    public void BounceDown()
     {
         rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
     }
@@ -28,9 +24,17 @@ public class BallPhysics : MonoBehaviour {
     {
         rigidBody.velocity = new Vector2(speedX * Mathf.Cos(radian), rigidBody.velocity.y * -1);
     }
-    public void SideBounce()
+    public void BounceDown()
     {
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x * -1, rigidBody.velocity.y);
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x , Mathf.Abs(rigidBody.velocity.y) * -1f);
+    }
+    public void LeftSideBounce()
+    {
+        rigidBody.velocity = new Vector2(Mathf.Abs(rigidBody.velocity.x), rigidBody.velocity.y);
+    }
+    public void RightSideBounce()
+    {
+        rigidBody.velocity = new Vector2(Mathf.Abs(rigidBody.velocity.x) * -1f, rigidBody.velocity.y);
     }
     public void RespawnBall()
     {

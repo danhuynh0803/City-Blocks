@@ -9,17 +9,20 @@ public class MainMenu : MonoBehaviour {
     public GameObject soundMenu;
     public GameObject creditMenu;
     public GameObject loadingScreen;
+    public GameObject soundController;
     [Header("In Game Only")]
     public GameObject pauseMenu;
 
     public Stack<GameObject> menuStack;
 
     private bool isPaused;
+    private Fading fadeController;
 
     void Start()
     {
         isPaused = false;
         menuStack = new Stack<GameObject>();
+        fadeController = FindObjectOfType<Fading>();
     }
     void Update()
     {
@@ -58,8 +61,10 @@ public class MainMenu : MonoBehaviour {
     {
         if (loadingScreen != null)
         {
-            loadingScreen.SetActive(true);
-            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            //loadingScreen.SetActive(true);
+            //SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            isPaused = false;
+            StartCoroutine(ChangeScene("MainMenu"));
         }
     }
 
@@ -67,8 +72,16 @@ public class MainMenu : MonoBehaviour {
     {
         if (loadingScreen != null)
         {
-            SceneManager.LoadScene("Stage1", LoadSceneMode.Single);
+            StartCoroutine(ChangeScene("Stage1"));
+            soundController.GetComponent<AudioSource>().PlayOneShot(soundController.GetComponent<SoundController>().sfxClips[0]);
         }
+    }
+
+    IEnumerator ChangeScene(string sceneName)
+    {
+        float fadeTime = fadeController.BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     public void Pause()
@@ -83,11 +96,15 @@ public class MainMenu : MonoBehaviour {
     {
         SceneManager.LoadScene(stageName, LoadSceneMode.Single);
     }
+
     public void Resume()
     {
-        isPaused = false;
-        Time.timeScale = 1.0f;
-        pauseMenu.SetActive(false);
+        if (pauseMenu != null)
+        {
+            isPaused = false;
+            Time.timeScale = 1.0f;
+            pauseMenu.SetActive(false);
+        }
     }
 
     public void ToggleControlMenu(bool boolean)

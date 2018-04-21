@@ -372,7 +372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c939aa278e1c1d040a26ff83b65c82e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxClips: []
+  sfxClips:
+  - {fileID: 8300000, guid: f31d6461cc7bd174aac1e248b5648355, type: 3}
   masterVolumeSlider: {fileID: 1183444639}
   bgmVolumeSlider: {fileID: 158057006}
   sfxVolumeSlider: {fileID: 752149441}
@@ -461,7 +462,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -576,6 +577,7 @@ GameObject:
   - component: {fileID: 500081176}
   - component: {fileID: 500081175}
   - component: {fileID: 500081174}
+  - component: {fileID: 500081179}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -653,6 +655,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500081179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 500081173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf18b43e949db24c869bb087aa8f728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeOutTexture: {fileID: 2800000, guid: a74e824ca680a924ab4c5bef9e7aec4a, type: 3}
+  fadeSpeed: 0.8
 --- !u!114 &752149441 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114574813957126080, guid: 8b57e7adcbecd234188a36771305b956,
@@ -1764,6 +1779,7 @@ MonoBehaviour:
   soundMenu: {fileID: 1583450564}
   creditMenu: {fileID: 1703091032}
   loadingScreen: {fileID: 1679475369}
+  soundController: {fileID: 137888228}
   pauseMenu: {fileID: 0}
 --- !u!224 &2139745962
 RectTransform:

@@ -11,7 +11,7 @@ public class TopWallPhysics : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Ball" && !isHitted)
         {
-            collision.gameObject.GetComponent<BallPhysics>().Bounce();
+            collision.gameObject.GetComponent<BallPhysics>().BounceDown();
             isHitted = true;
             StartCoroutine(ResetHit(hitTIme));
         }
