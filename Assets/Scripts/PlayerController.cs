@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public static int maxLives = 3;
     private int lives;
 
+    private WordManager wordManager;
     /*
     [Header("Spawn Settings")]
     public Transform playerSpawn; // Where the player is respawned
@@ -18,23 +19,24 @@ public class PlayerController : MonoBehaviour {
     Rigidbody rb;
     */
 
-	void Start ()
+    void Start ()
     {
-      
+        wordManager = FindObjectOfType<WordManager>();
 	}
 	
 	void Update ()
     {
-        // This handles the user input for typing test portion
-        foreach (char letter in Input.inputString)
-        {
-            Debug.Log(letter);
-        } 
+        WordInput();
 	}
 
     // This gets the next word being typed in
     void WordInput()
     {
-
+        // This handles the user input for typing test portion
+        foreach (char letter in Input.inputString)
+        {
+            //Debug.Log(letter);
+            wordManager.TypeLetter(letter);
+        }
     }
 }

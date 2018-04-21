@@ -1,8 +1,7 @@
-hello
 accident
-June1998
+June
 small
 large
 fast
 accelerate
-stop time
+stop

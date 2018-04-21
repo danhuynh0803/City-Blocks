@@ -5,16 +5,18 @@ using UnityEngine;
 public class WordManager : MonoBehaviour {
 
     public List<Word> wordList;
-    public TextAsset wordFile;  // A text file that will be read in and stored in the words list
+   
+    private WordSpawner wordSpawner;
+    private WordGenerator wordGenerator;
 
     private Word activeWord;
     private bool hasActiveWord;
 
     void Start()
     {
-        ParseWordFile();   
-    
-        
+        wordSpawner = FindObjectOfType<WordSpawner>();
+        wordGenerator = FindObjectOfType<WordGenerator>();
+
         // For testing if words are parsed properly
         foreach (Word word in wordList)
         {
@@ -23,10 +25,9 @@ public class WordManager : MonoBehaviour {
         
     }
     
-    public Word GetRandomWord()
+    public void AddWord()
     {
-        int index = Random.Range(0, wordList.Count);
-        return wordList[index];
+        wordList.Add(new Word(wordGenerator.GetRandomWord(), wordSpawner.SpawnWord()));
     }
 
     public void TypeLetter (char letter)
@@ -34,17 +35,23 @@ public class WordManager : MonoBehaviour {
         if (hasActiveWord)
         {
             // Check if the letter is next
-            if (activeWord.GetNextLetter() == letter)
+            if (char.ToLower(activeWord.GetNextLetter()) == char.ToLower(letter))
             {
                 activeWord.IncrementTypeIndex();
+                Debug.Log(activeWord.WordTyped());
+                if (activeWord.WordTyped())
+                {
+                    hasActiveWord = false;
+                    wordList.Remove(activeWord);
+                }
             }
         }
         else
         {
             foreach (Word word in wordList)
             {
-                // 
-                if (word.GetNextLetter() == letter)
+                // Find the next active word
+                if (char.ToLower(word.GetNextLetter()) == char.ToLower(letter))
                 {
                     activeWord = word;
                     hasActiveWord = true;
@@ -54,24 +61,13 @@ public class WordManager : MonoBehaviour {
             }
         }
 
+        /*
         if (hasActiveWord && activeWord.WordTyped())
         {
             hasActiveWord = false;
             wordList.Remove(activeWord);
         }
+        */
     }
-
-    // Parse and add the words from the word text file into the word list
-    private void ParseWordFile()
-    {
-        string[] wordLines = wordFile.text.Split('\n');
-        foreach (string newWord in wordLines)
-        {
-            // Add only if the word has a length
-            if (newWord.Length > 0)
-            {
-                wordList.Add(new Word(newWord));
-            }
-        }
-    }
+  
 }
