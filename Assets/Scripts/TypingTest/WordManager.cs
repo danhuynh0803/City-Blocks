@@ -5,7 +5,8 @@ using UnityEngine;
 public class WordManager : MonoBehaviour {
 
     public List<Word> wordList;
-   
+    public Transform killLayer;         // Kills the active word when it passes this point
+
     private WordSpawner wordSpawner;
     private WordGenerator wordGenerator;
 
@@ -18,16 +19,35 @@ public class WordManager : MonoBehaviour {
         wordGenerator = FindObjectOfType<WordGenerator>();
 
         // For testing if words are parsed properly
+        /*
         foreach (Word word in wordList)
         {
             Debug.Log(word.word);
         }
-        
+        */
     }
-    
-    public void AddWord()
+
+    private void Update()
     {
-        wordList.Add(new Word(wordGenerator.GetRandomWord(), wordSpawner.SpawnWord()));
+        // Kill active word when it falls below specified vertical position
+        if (hasActiveWord)
+        {
+            if (activeWord.display.transform.position.y < killLayer.position.y)
+            {
+                RemoveActiveWord();
+            }
+            
+        }
+    }
+
+    public void AddWord()
+    {   
+        wordList.Add(wordGenerator.GetRandomWord());
+    }
+
+    public void AddWord(string newWord)
+    {
+        wordList.Add(new Word(newWord, wordSpawner.SpawnWord()));
     }
 
     public void TypeLetter (char letter)
@@ -38,12 +58,16 @@ public class WordManager : MonoBehaviour {
             if (char.ToLower(activeWord.GetNextLetter()) == char.ToLower(letter))
             {
                 activeWord.IncrementTypeIndex();
-                Debug.Log(activeWord.WordTyped());
+                //Debug.Log(activeWord.WordTyped());
                 if (activeWord.WordTyped())
                 {
-                    hasActiveWord = false;
-                    wordList.Remove(activeWord);
+                    RemoveActiveWord();
                 }
+            }
+            // Change text to red to indicate incorrect letter
+            else
+            {
+                activeWord.display.SetIncorrectColor();
             }
         }
         else
@@ -60,14 +84,13 @@ public class WordManager : MonoBehaviour {
                 }
             }
         }
+    }
 
-        /*
-        if (hasActiveWord && activeWord.WordTyped())
-        {
-            hasActiveWord = false;
-            wordList.Remove(activeWord);
-        }
-        */
+    private void RemoveActiveWord()
+    {
+        hasActiveWord = false;
+        activeWord.display.RemoveWord();
+        wordList.Remove(activeWord);
     }
   
 }

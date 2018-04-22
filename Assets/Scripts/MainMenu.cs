@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour {
     public GameObject creditMenu;
     public GameObject loadingScreen;
     public GameObject soundController;
+    public GameObject levelController;
     [Header("In Game Only")]
     public GameObject pauseMenu;
 
@@ -47,13 +48,14 @@ public class MainMenu : MonoBehaviour {
         }
 
         // Handle opening/closing of pause menu
-        if (isPaused)
+        if (isPaused && !LevelController.isGameOver)
         {
             Pause();
         }
         else
         {
-            Resume();
+            if(!LevelController.isGameOver)
+                Resume();
         }
     }
 

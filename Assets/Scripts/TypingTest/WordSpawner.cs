@@ -7,7 +7,7 @@ public class WordSpawner : MonoBehaviour {
     public GameObject wordPrefab;
     public Transform wordCanvas;
 
-    public float spawnDelay = 2.0f;
+    public float spawnDelay = 5.0f;
     private float timeStamp = 0.0f;
     public float horizontalOffset;  // Offset amount from center
     public float maxHeight; 
@@ -17,6 +17,10 @@ public class WordSpawner : MonoBehaviour {
     private void Start()
     {
         wordManager = FindObjectOfType<WordManager>();
+
+        // Display the first word
+        wordManager.AddWord("type us");
+        timeStamp = Time.time + spawnDelay;
     }
 
     public WordDisplay SpawnWord()

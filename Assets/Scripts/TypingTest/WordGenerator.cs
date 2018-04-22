@@ -8,15 +8,27 @@ public class WordGenerator : MonoBehaviour {
 
     public List<string> stringList;
 
+    private WordSpawner wordSpawner;
+
     private void Awake()
     {
         ParseWordFile();
+        wordSpawner = FindObjectOfType<WordSpawner>();
     }
 
-    public string GetRandomWord()
+    public Word GetRandomWord()
     {
         int index = Random.Range(0, stringList.Count);
-        return stringList[index];
+        Word newWord;
+
+        // Control color based on what index the word was chosen at
+        // All words from lines 1-15 are green (powerup related awards)
+        if (index < 15)
+            newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.green);
+        else
+            newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.yellow);
+
+        return newWord;
     }
 
     // Parse and add the words from the word text file into the word list

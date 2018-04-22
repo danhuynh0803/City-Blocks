@@ -7,9 +7,11 @@ public class DoNotDestroy : MonoBehaviour {
 	
 	// To keep persistent when changing levels
 	void Awake() {
-		if (!isInstantiated) { 
-			DontDestroyOnLoad (this.gameObject);
-		} 
+        if (!isInstantiated)
+        {
+            isInstantiated = true;
+            DontDestroyOnLoad(this.gameObject);
+        }
 	}
 
 

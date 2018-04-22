@@ -8,7 +8,19 @@ public class Word
     public string word;
     private int currentTypedIndex;  // Used to check if the next letter matches what we type 
    
-    WordDisplay display;
+    public WordDisplay display;
+    public Color color;
+
+    public Word(string word, WordDisplay display, Color color)
+    {
+        this.word = word;
+        currentTypedIndex = 0;
+
+        // For displaying the word in game
+        this.display = display;
+        display.SetWordText(word);
+        display.textColor = color;
+    }
 
     public Word (string word, WordDisplay display)
     {

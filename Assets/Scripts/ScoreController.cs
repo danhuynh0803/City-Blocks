@@ -15,7 +15,6 @@ public class ScoreController : MonoBehaviour
     void Awake()
     {
         score = 0;
-        highscore = 0;
     }
 
     void Update()

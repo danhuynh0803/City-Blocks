@@ -143,7 +143,7 @@ MonoBehaviour:
   text: {fileID: 114610571934666062}
   shadowText: {fileID: 114370120276570908}
   fallSpeed: 20
-  destroyTimer: 60
+  textColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!222 &222333900949038764
 CanvasRenderer:
   m_ObjectHideFlags: 1

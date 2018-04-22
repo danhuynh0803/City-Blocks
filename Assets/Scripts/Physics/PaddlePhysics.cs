@@ -8,6 +8,7 @@ public class PaddlePhysics : MonoBehaviour {
     public float hitTIme = 1f;
     public float rightBoundX = 12.5f;
     public float leftBoundX = -3.45f;
+
     bool isHitted;
 
     void OnTriggerStay2D(Collider2D collision)

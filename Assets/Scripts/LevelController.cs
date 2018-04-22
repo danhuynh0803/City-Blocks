@@ -6,19 +6,38 @@ public class LevelController : MonoBehaviour {
 
 	public GameObject GameOverPanel;							// Display when timer reaches 0
 	public GameObject playerSpawnPoint;							// Player1's spawnpoint
-    public float respawnDelay; 
-
+    public float respawnDelay;
+    public int initialLife;
+    private int life;
+    public int maxLife;
 	public Text timer; 											// Time remaining
 	public Text timerShadow;		
 	public Text p1Score;										// Player1's score
 	public Text p1ScoreShadow;
+    public Text lifePoint;                                      // Life
+    public Text lifePointShadow;
 
 	public float gameTimer;
 	private float currentTime;
 	private bool hasUpdatedScore = false;
-	private bool isGameOver = false;
+	public static bool isGameOver = false;
 
-	void Start () {
+    public int Life
+    {
+        get
+        {
+            return life;
+        }
+
+        set
+        {
+            life = value;
+        }
+    }
+
+    void Start () {
+        Life = initialLife;
+        SetLifeText();
         GameOverPanel.SetActive(false);
 		currentTime = gameTimer;
 		hasUpdatedScore = false;
@@ -30,7 +49,7 @@ public class LevelController : MonoBehaviour {
 	void Update () {
 
 		if (isGameOver) {
-			DisplayFinalText (hasUpdatedScore);
+			//DisplayFinalText (hasUpdatedScore);
 		}
 	}
 	
@@ -68,9 +87,14 @@ public class LevelController : MonoBehaviour {
 	}
 
 	
-	private void GameOver() 
-	{		
-		Time.timeScale = 0.0f;
+	public void GameOver() 
+	{
+        isGameOver = true;
+        Time.timeScale = 0.0f;
+        if(ScoreController.isHighScore())
+        {
+            ScoreController.updateHighScore();
+        }
 		GameOverPanel.SetActive (true);
 	}
 		
@@ -86,4 +110,13 @@ public class LevelController : MonoBehaviour {
 			timerShadow.text = "Final Score: " + ScoreController.getScore();
 		}
 	}
+    public void LoseLife(int lose)
+    {
+        Life = Mathf.Clamp(Life - lose, 0, maxLife);
+    }
+    public void SetLifeText()
+    {
+        lifePoint.text = "Life: " + Life;
+        lifePointShadow.text = "Life: " + Life;
+    }
 }

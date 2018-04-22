@@ -5,13 +5,10 @@ using UnityEngine.UI;
 
 public enum SFX
 {
-    /*
-    RockBreakLarge,
-    RockBreakMedium,
-    RockBreakSmall
-    */
-}
-
+    Load,
+    BallBounce,
+    CarExplodeGlass
+};
 
 public class SoundController : MonoBehaviour {
 
@@ -29,14 +26,16 @@ public class SoundController : MonoBehaviour {
     public Slider bgmVolumeSlider;
     public Slider sfxVolumeSlider;
 
+    /*
     static bool isAudioOn = false;
     AudioSource bgmAudio;
+    */
 
     // To keep BGM persistent when changing levels
     void Awake()
     {
         // set up bgm audio 
-        bgmAudio = GetComponent<AudioSource>();
+        //bgmAudio = GetComponent<AudioSource>();
 
         // Set up sfx audio
         sources = new AudioSource[sfxClips.Length];
@@ -49,6 +48,7 @@ public class SoundController : MonoBehaviour {
         }
 
         // Play BGM audio if it's not currently being played
+        /*
         if (!isAudioOn)
         {
             bgmAudio.Play();
@@ -61,23 +61,72 @@ public class SoundController : MonoBehaviour {
         {
             bgmAudio.Stop();
         }
+        */
     }
 
     void Start()
     {
+        // Setup the volume sliders
+        if (masterVolumeSlider == null)
+        {
+            masterVolumeSlider = GameObject.FindGameObjectWithTag("MasterSlider").GetComponent<Slider>();
+        }
+        if (bgmVolumeSlider == null)
+        {
+            bgmVolumeSlider = GameObject.FindGameObjectWithTag("BGMSlider").GetComponent<Slider>();
+        }
+        if (sfxVolumeSlider == null)
+        {
+            sfxVolumeSlider = GameObject.FindGameObjectWithTag("SFXSlider").GetComponent<Slider>();
+        }
+
+        /*if (masterVolumeSlider == null)
+        {
+            GameObject masterVolumeSliderObject = GameObject.Find("MasterSlider");
+            if (masterVolumeSliderObject != null)
+            {
+                masterVolumeSlider = masterVolumeSliderObject.GetComponent<Slider>();
+            }
+        }
+        if (bgmVolumeSlider == null)
+        {
+            GameObject bgmVolumeSliderObject = GameObject.Find("BGMSlider");
+            if (bgmVolumeSliderObject != null)
+            {
+                bgmVolumeSlider = bgmVolumeSliderObject.GetComponent<Slider>();
+            }
+        }
+        if (sfxVolumeSlider == null)
+        {
+            GameObject sfxVolumeSliderObject = GameObject.Find("SFXSlider");
+            if (sfxVolumeSliderObject != null)
+            {
+                sfxVolumeSlider = sfxVolumeSliderObject.GetComponent<Slider>();
+            }
+        }*/
+
         masterVolumeSlider.onValueChanged.AddListener(delegate { OnMasterVolumeValueChanged(); });
         bgmVolumeSlider.onValueChanged.AddListener(delegate { OnBGMVolumeValueChanged(); });
         sfxVolumeSlider.onValueChanged.AddListener(delegate { OnSFXVolumeValueChanged(); });
+        
     }
 
     void Update()
     {
-        masterVolume = masterVolumeSlider.value;
-        bgmVolume = bgmVolumeSlider.value;
-        sfxVolume = sfxVolumeSlider.value;
-
-        // Update bgm volume
-        bgmAudio.volume = Mathf.Min(bgmVolume, masterVolume);
+        if (masterVolumeSlider != null)
+        {
+            masterVolume = masterVolumeSlider.value;
+        }
+        if (bgmVolumeSlider != null)
+        {
+            bgmVolume = bgmVolumeSlider.value;
+            // Update bgm volume
+            //bgmAudio.volume = Mathf.Min(bgmVolume, masterVolume);
+        }       
+        if (sfxVolumeSlider != null)
+        {
+            sfxVolume = sfxVolumeSlider.value;
+        }
     }
 
     public static void Play(int soundIndex)
@@ -91,6 +140,7 @@ public class SoundController : MonoBehaviour {
     public static void Play(int soundIndex, float volumeLevel)  
     {
         volumeLevel = Mathf.Clamp(volumeLevel, 0.0f, 1.0f);
+        //Debug.Log(soundIndex);
         sources[soundIndex].volume = volumeLevel * Mathf.Min(sfxVolume, masterVolume);
         sources[soundIndex].Play();
     }
