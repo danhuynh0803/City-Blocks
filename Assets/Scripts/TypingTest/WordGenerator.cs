@@ -28,6 +28,10 @@ public class WordGenerator : MonoBehaviour {
         else
             newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.yellow);
 
+        // Set the line number of the word within the dictionary file
+        // for use in determining what words have powerups (to replace with function pointers)
+        newWord.lineNumFunction = index;
+
         return newWord;
     }
 

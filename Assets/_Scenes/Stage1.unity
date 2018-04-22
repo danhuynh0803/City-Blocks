@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1102,8 +1102,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259920358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.48, y: -5.99, z: 0}
-  m_LocalScale: {x: 15, y: 5, z: 1}
+  m_LocalPosition: {x: 4.97, y: -4.74, z: 0}
+  m_LocalScale: {x: 10, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
@@ -3638,6 +3638,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 08d7c140f9c7ab14082c3c4d22ef2ade, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1331320239 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1966550283926318, guid: 08d7c140f9c7ab14082c3c4d22ef2ade,
+    type: 2}
+  m_PrefabInternal: {fileID: 1331320238}
 --- !u!1 &1342164689
 GameObject:
   m_ObjectHideFlags: 0
@@ -6294,6 +6299,58 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1967004330}
+--- !u!1 &1973784061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1973784063}
+  - component: {fileID: 1973784062}
+  m_Layer: 0
+  m_Name: PowerUpController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1973784062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1973784061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f75f23c2e52b0c49bd0bab8fd7dddbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 1331320239}
+  decreaseBallSpeedFactor: 0.9
+  decreaseBallSpeedDuration: 30
+  maxDecreaseBallSpeedDuration: 30
+  DecreaseBallSpeedStack: 0
+  yolo: 0
+  playerPaddle: {fileID: 260757826}
+  lengthenDuration: 30
+  lengthenScale: 0.1
+  originalScale: {x: 0, y: 0, z: 0}
+  bumper: {fileID: 259920358}
+  bumpeDuration: 30
+--- !u!4 &1973784063
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1973784061}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.822312, y: -10.243498, z: -2.4474173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010095407
 GameObject:
   m_ObjectHideFlags: 0
