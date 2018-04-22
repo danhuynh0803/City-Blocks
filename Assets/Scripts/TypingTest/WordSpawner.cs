@@ -39,6 +39,7 @@ public class WordSpawner : MonoBehaviour {
         {
             wordManager.AddWord();
             timeStamp = Time.time + spawnDelay;
+            spawnDelay *= .99f;
         }
     }
 }

@@ -79,6 +79,11 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
+    public void LoadWinScene()
+    {
+        StartCoroutine(ChangeScene("Win"));
+    }
+
     IEnumerator ChangeScene(string sceneName)
     {
         float fadeTime = fadeController.BeginFade(1);

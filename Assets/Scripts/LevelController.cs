@@ -4,7 +4,8 @@ using System.Collections;
 
 public class LevelController : MonoBehaviour {
 
-	public GameObject GameOverPanel;							// Display when timer reaches 0
+	public GameObject GameOverPanel;							// Display when lives reach 0
+    public GameObject WinPanel;
 	public GameObject playerSpawnPoint;							// Player1's spawnpoint
     public float respawnDelay;
     public int initialLife;
@@ -17,11 +18,13 @@ public class LevelController : MonoBehaviour {
     public Text lifePoint;                                      // Life
     public Text lifePointShadow;
 
+    private MainMenu mainMenu;
+
 	public float gameTimer;
 	private float currentTime;
 	private bool hasUpdatedScore = false;
 	public static bool isGameOver = false;
-
+    
     public int Life
     {
         get
@@ -36,6 +39,7 @@ public class LevelController : MonoBehaviour {
     }
 
     void Start () {
+        mainMenu = FindObjectOfType<MainMenu>();
         Life = initialLife;
         SetLifeText();
         GameOverPanel.SetActive(false);
@@ -46,11 +50,18 @@ public class LevelController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        SetLifeText();
 
-		if (isGameOver) {
+		if (isGameOver)
+        {
 			//DisplayFinalText (hasUpdatedScore);
 		}
+        if (ScoreController.isHighScore())
+        {
+            Win();
+        }
 	}
 	
 	public void Respawn() 
@@ -86,6 +97,12 @@ public class LevelController : MonoBehaviour {
 		yield return new WaitForSeconds(respawnDelay);
 	}
 
+    // Win condition
+    public void Win()
+    {
+        mainMenu.LoadWinScene();
+        //WinPanel.SetActive(true);
+    }
 	
 	public void GameOver() 
 	{
@@ -110,10 +127,17 @@ public class LevelController : MonoBehaviour {
 			timerShadow.text = "Final Score: " + ScoreController.getScore();
 		}
 	}
+
+    public void AddLife()
+    {
+        Life = Mathf.Clamp(Life + 1, 0, maxLife);
+    }
+
     public void LoseLife(int lose)
     {
         Life = Mathf.Clamp(Life - lose, 0, maxLife);
     }
+
     public void SetLifeText()
     {
         lifePoint.text = "Life: " + Life;

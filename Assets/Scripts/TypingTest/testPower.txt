@@ -1,0 +1,4 @@
+child
+lifeline
+hospital
+medicine

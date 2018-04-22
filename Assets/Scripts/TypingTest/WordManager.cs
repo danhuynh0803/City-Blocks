@@ -12,11 +12,15 @@ public class WordManager : MonoBehaviour {
 
     private Word activeWord;
     private bool hasActiveWord;
+    private bool hasMultiplierChain;
+
+    private Powerup powerupController;
 
     void Start()
     {
         wordSpawner = FindObjectOfType<WordSpawner>();
         wordGenerator = FindObjectOfType<WordGenerator>();
+        powerupController = FindObjectOfType<Powerup>();
 
         // For testing if words are parsed properly
         /*
@@ -29,15 +33,34 @@ public class WordManager : MonoBehaviour {
 
     private void Update()
     {
-        // Kill active word when it falls below specified vertical position
+        // Kill each word when it falls below specified vertical position
+        if (wordList.Count > 0)
+        {
+            // Check if the first word is out of bounds 
+            Word firstWord = wordList[0];
+            if (firstWord.display.transform.position.y < killLayer.position.y)
+            {
+                if (firstWord == activeWord)
+                    RemoveActiveWord();
+                else
+                {
+                    firstWord.display.RemoveWord();
+                    wordList.Remove(firstWord);
+                }
+
+                // Missed a word so reset the multiplier back to one
+                ScoreController.resetMultiplier();
+            }     
+        }
+        /*
         if (hasActiveWord)
         {
             if (activeWord.display.transform.position.y < killLayer.position.y)
             {
                 RemoveActiveWord();
             }
-            
         }
+        */
     }
 
     public void AddWord()
@@ -61,6 +84,16 @@ public class WordManager : MonoBehaviour {
                 //Debug.Log(activeWord.WordTyped());
                 if (activeWord.WordTyped())
                 {
+                    if (!hasMultiplierChain)
+                    {
+                        hasMultiplierChain = true; // Start chaining the words for multiplier
+                        ScoreController.hasChain = true;
+                    }
+                    else
+                    {
+                        ScoreController.incrementMultiplier();
+                    }
+                    //ScoreController.incrementScore(activeWord.points);
                     RemoveActiveWord();
                 }
             }
@@ -89,6 +122,10 @@ public class WordManager : MonoBehaviour {
     private void RemoveActiveWord()
     {
         hasActiveWord = false;
+
+        // Active the powerup for that word
+        powerupController.ActivatePowerup(activeWord.lineNumFunction); // pass the index
+
         activeWord.display.RemoveWord();
         wordList.Remove(activeWord);
     }

@@ -7,6 +7,10 @@ public class BallPhysics : MonoBehaviour {
     public float speedY = 10;
     public float speedX = 10;
 
+    private float initalSpeedX;
+    private float initalSpeedY;
+    private float radian;
+
     [Header("Respawn Settings")]
     public float startDelay = 2.0f;
     public float respawnDelay = 1.5f;
@@ -20,9 +24,51 @@ public class BallPhysics : MonoBehaviour {
     public GameObject paddle;
     public GameObject levelController;
 
+    public float InitalSpeedX
+    {
+        get
+        {
+            return initalSpeedX;
+        }
+
+        set
+        {
+            initalSpeedX = value;
+        }
+    }
+
+    public float InitalSpeedY
+    {
+        get
+        {
+            return initalSpeedY;
+        }
+
+        set
+        {
+            initalSpeedY = value;
+        }
+    }
+
+    public float Radian
+    {
+        get
+        {
+            return radian;
+        }
+
+        set
+        {
+            radian = value;
+        }
+    }
+
     void Start () {
         rigidBody = GetComponent<Rigidbody2D>();
         Kick();
+        Radian = 
+        InitalSpeedX = speedX;
+        InitalSpeedY = speedY;
     }
     void Update()
     {
@@ -69,7 +115,7 @@ public class BallPhysics : MonoBehaviour {
     public void RespawnBall()
     {
         rigidBody.velocity = new Vector2(0.0f, 0.0f);
-        transform.position = new Vector2(paddle.transform.position.x, paddle.transform.position.y + 2f);
+        transform.position = new Vector2(paddle.transform.position.x, paddle.transform.position.y + (0.37f + 2.61f));
         StartCoroutine(WaitThenKick(respawnDelay));
     }
     void CheckingOutOfBOund()
@@ -90,5 +136,13 @@ public class BallPhysics : MonoBehaviour {
         }
         
     }
-    
+    public void SetSpeedX(float x)
+    {
+        speedX = x;
+    }
+    public void SetSpeedY(float y)
+    {
+        speedY = y;
+    }
+
 }

@@ -6,10 +6,13 @@ using UnityEngine;
 public class Word
 {
     public string word;
+    public int lineNumFunction; // Hacky way of finding which word goes with which powerup function (Replace w/ fcn pointers)
+
     private int currentTypedIndex;  // Used to check if the next letter matches what we type 
-   
+    
     public WordDisplay display;
     public Color color;
+    public int points = 50;
 
     public Word(string word, WordDisplay display, Color color)
     {
@@ -55,10 +58,4 @@ public class Word
 
         return wordTyped;
     }
-
-    private void powerup()
-    {
-
-    }
-
 }
