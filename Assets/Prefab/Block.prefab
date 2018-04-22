@@ -102,7 +102,7 @@ MonoBehaviour:
   block:
     x: 0
     y: 0
-  score: 10
+  score: 100
 --- !u!212 &212854306624800082
 SpriteRenderer:
   m_ObjectHideFlags: 1

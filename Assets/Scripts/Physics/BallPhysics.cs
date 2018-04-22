@@ -82,7 +82,7 @@ public class BallPhysics : MonoBehaviour {
     IEnumerator WaitThenKick(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        rigidBody.velocity = new Vector2(0f, -1 * speedY);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0.2f, -1 * speedY);
     }
     public void Bounce()
     {
@@ -90,7 +90,7 @@ public class BallPhysics : MonoBehaviour {
             SoundController.Play((int)SFX.CarExplodeGlass, glassVolume);
         else
             SoundController.Play((int)SFX.BallBounce, ballBounceVolume);
-        rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
+        //rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
     }
     public void Bounce(float radian)
     {
@@ -101,6 +101,11 @@ public class BallPhysics : MonoBehaviour {
     {
         SoundController.Play((int)SFX.BallBounce, ballBounceVolume);
         rigidBody.velocity = new Vector2(rigidBody.velocity.x , Mathf.Abs(rigidBody.velocity.y) * -1f);
+    }
+    public void BounceUp()
+    {
+        SoundController.Play((int)SFX.BallBounce, ballBounceVolume);
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, Mathf.Abs(rigidBody.velocity.y));
     }
     public void LeftSideBounce()
     {
@@ -114,7 +119,10 @@ public class BallPhysics : MonoBehaviour {
     }
     public void RespawnBall()
     {
-        rigidBody.velocity = new Vector2(0.0f, 0.0f);
+        SoundController.Play((int)SFX.BallFall, 0.1f);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+        if (paddle == null)
+            paddle = GameObject.Find("PlayerPaddle");
         transform.position = new Vector2(paddle.transform.position.x, paddle.transform.position.y + (0.37f + 2.61f));
         StartCoroutine(WaitThenKick(respawnDelay));
     }

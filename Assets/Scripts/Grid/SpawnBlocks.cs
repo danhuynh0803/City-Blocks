@@ -16,6 +16,11 @@ public class SpawnBlocks : MonoBehaviour {
     public static int blocksHit;
     public GameObject ball;
 
+    public float saturation = 1.0f;
+    public float value = 1.0f;
+
+    public Color[] blockColors; 
+
     void Start()
     {
         blocksHit = 0;
@@ -33,6 +38,7 @@ public class SpawnBlocks : MonoBehaviour {
 
     void Spawn()
     {
+        SoundController.Play((int)SFX.ClearBoard);
         blocksCount = 0;
         for (int i = 0; i < rows; i++)
        {
@@ -40,7 +46,10 @@ public class SpawnBlocks : MonoBehaviour {
             {
                 float blockX = offsetX + i * gapX;
                 float blockY = offsetY + j * gapY;
-                Instantiate(blockPrefab, new Vector2(blockX, blockY), Quaternion.identity);
+                GameObject block =Instantiate(blockPrefab, new Vector2(blockX, blockY), Quaternion.identity);
+                // Set color based on rows
+                block.GetComponent<SpriteRenderer>().color = Color.HSVToRGB(Mathf.Lerp(0.53f, 0.76f, (float)j/cols), saturation, value);
+                //block.GetComponent<SpriteRenderer>().material.color = blockColors[i % 3];
                 blocksCount++;
             }
        }

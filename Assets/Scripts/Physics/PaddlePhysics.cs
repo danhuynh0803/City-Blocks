@@ -6,9 +6,8 @@ public class PaddlePhysics : MonoBehaviour {
     [Header("Adjust Paddle Speed here")]
     public float paddleSpeed = 30f;
     public float hitTIme = 1f;
-    public float rightBoundX = 12.5f;
-    public float leftBoundX = -3.45f;
-
+    public float rightBoundX = 13.7f;
+    public float leftBoundX = -4.3f;
     bool isHitted;
 
     void OnTriggerStay2D(Collider2D collision)
@@ -34,11 +33,11 @@ public class PaddlePhysics : MonoBehaviour {
 
     void PaddleInput()
     {
-        if(Input.GetKey(KeyCode.RightArrow) && transform.position.x <= rightBoundX)
+        if((Input.GetKey(KeyCode.RightArrow) || (Input.GetKey(KeyCode.RightBracket))) && (transform.position.x + GetComponent<SpriteRenderer>().bounds.size.x/2) <= rightBoundX)
         {
             transform.position = new Vector2(transform.position.x + paddleSpeed * Time.deltaTime, transform.position.y);
         }
-        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x >= leftBoundX)
+        else if ((Input.GetKey(KeyCode.LeftArrow) || (Input.GetKey(KeyCode.LeftBracket))) && (transform.position.x - GetComponent<SpriteRenderer>().bounds.size.x/2) >= leftBoundX)
         {
             transform.position = new Vector2(transform.position.x - paddleSpeed * Time.deltaTime, transform.position.y);
         }

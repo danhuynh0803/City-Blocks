@@ -7,8 +7,10 @@ public class WordSpawner : MonoBehaviour {
     public GameObject wordPrefab;
     public Transform wordCanvas;
 
+    public float firstWordDelay = 10.0f;
     public float spawnDelay = 5.0f;
     private float timeStamp = 0.0f;
+    public float spawnDecreaseFactor = 0.97f;
     public float horizontalOffset;  // Offset amount from center
     public float maxHeight; 
 
@@ -20,7 +22,7 @@ public class WordSpawner : MonoBehaviour {
 
         // Display the first word
         wordManager.AddWord("type us");
-        timeStamp = Time.time + spawnDelay;
+        timeStamp = Time.time + firstWordDelay;
     }
 
     public WordDisplay SpawnWord()
@@ -38,8 +40,10 @@ public class WordSpawner : MonoBehaviour {
         if (Time.time >= timeStamp)
         {
             wordManager.AddWord();
+            spawnDelay = Mathf.Clamp(spawnDelay*spawnDecreaseFactor, 2.0f, spawnDelay);
             timeStamp = Time.time + spawnDelay;
-            spawnDelay *= .99f;
+            
+            //spawnDelay *= spawnDecreaseFactor;
         }
     }
 }

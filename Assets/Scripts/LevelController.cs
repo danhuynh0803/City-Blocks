@@ -113,6 +113,7 @@ public class LevelController : MonoBehaviour {
             ScoreController.updateHighScore();
         }
 		GameOverPanel.SetActive (true);
+        GameOverPanel.transform.SetSiblingIndex(GameOverPanel.transform.parent.childCount-1);
 	}
 		
 	private void DisplayFinalText(bool isHighScore) 

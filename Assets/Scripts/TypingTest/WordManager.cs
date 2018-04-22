@@ -51,16 +51,7 @@ public class WordManager : MonoBehaviour {
                 // Missed a word so reset the multiplier back to one
                 ScoreController.resetMultiplier();
             }     
-        }
-        /*
-        if (hasActiveWord)
-        {
-            if (activeWord.display.transform.position.y < killLayer.position.y)
-            {
-                RemoveActiveWord();
-            }
-        }
-        */
+        }        
     }
 
     public void AddWord()
@@ -75,45 +66,51 @@ public class WordManager : MonoBehaviour {
 
     public void TypeLetter (char letter)
     {
-        if (hasActiveWord)
+        if (!letter.Equals('[') && !letter.Equals(']'))
         {
-            // Check if the letter is next
-            if (char.ToLower(activeWord.GetNextLetter()) == char.ToLower(letter))
+            if (hasActiveWord)
             {
-                activeWord.IncrementTypeIndex();
-                //Debug.Log(activeWord.WordTyped());
-                if (activeWord.WordTyped())
+                // Check if the letter is next
+                if (char.ToLower(activeWord.GetNextLetter()) == char.ToLower(letter))
                 {
-                    if (!hasMultiplierChain)
+                    activeWord.IncrementTypeIndex();
+                    //Debug.Log(activeWord.WordTyped());
+                    if (activeWord.WordTyped())
                     {
-                        hasMultiplierChain = true; // Start chaining the words for multiplier
                         ScoreController.hasChain = true;
+                        if (!hasMultiplierChain)
+                        {
+                            hasMultiplierChain = true; // Start chaining the words for multiplier                        
+                        }
+                        else
+                        {
+                            ScoreController.incrementMultiplier();
+                        }
+                        //ScoreController.incrementScore(activeWord.points);
+                        RemoveActiveWord();
                     }
-                    else
-                    {
-                        ScoreController.incrementMultiplier();
-                    }
-                    //ScoreController.incrementScore(activeWord.points);
-                    RemoveActiveWord();
                 }
+                // Change text to red to indicate incorrect letter
+                else
+                {
+                    activeWord.display.SetIncorrectColor();
+                    SoundController.Play((int)SFX.Wrong);
+                }
+
             }
-            // Change text to red to indicate incorrect letter
             else
             {
-                activeWord.display.SetIncorrectColor();
-            }
-        }
-        else
-        {
-            foreach (Word word in wordList)
-            {
-                // Find the next active word
-                if (char.ToLower(word.GetNextLetter()) == char.ToLower(letter))
+                foreach (Word word in wordList)
                 {
-                    activeWord = word;
-                    hasActiveWord = true;
-                    word.IncrementTypeIndex();
-                    break;
+                    // Find the next active word
+                    if (char.ToLower(word.GetNextLetter()) == char.ToLower(letter))
+                    {
+                        activeWord = word;
+                        activeWord.display.IncreaseFontSize(10);
+                        hasActiveWord = true;
+                        word.IncrementTypeIndex();
+                        break;
+                    }
                 }
             }
         }
@@ -124,8 +121,8 @@ public class WordManager : MonoBehaviour {
         hasActiveWord = false;
 
         // Active the powerup for that word
-        powerupController.ActivatePowerup(activeWord.lineNumFunction); // pass the index
-
+        powerupController.ActivatePowerup(activeWord.lineNumFunction, activeWord); // pass the index
+        ScoreController.incrementScore(activeWord.points);  // Get points for typing the word correctly
         activeWord.display.RemoveWord();
         wordList.Remove(activeWord);
     }

@@ -31,6 +31,7 @@ public class ScoreController : MonoBehaviour
         scoreShadowText.text = "Score: " + score;         
         highscoreText.text = "High Score: " + highscore;       
         highscoreShadowText.text = "High Score: " + highscore;  
+
         if (!hasChain)
         {
             scoreMultiplierText.color = Color.white;
@@ -46,7 +47,7 @@ public class ScoreController : MonoBehaviour
 
     public static void incrementMultiplier()
     {
-        scoreMultiplier += 2;
+        scoreMultiplier = Mathf.Clamp(scoreMultiplier *= 2, 1, 1024);
     }
 
     public static void resetMultiplier()

@@ -6,12 +6,16 @@ public class TopWallPhysics : MonoBehaviour {
 
     public float hitTIme = 1f;
     bool isHitted;
+    public bool isBottom;
 
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ball" && !isHitted)
         {
-            collision.gameObject.GetComponent<BallPhysics>().BounceDown();
+            if(isBottom)
+                collision.gameObject.GetComponent<BallPhysics>().BounceUp();
+            else
+                collision.gameObject.GetComponent<BallPhysics>().BounceDown();
             isHitted = true;
             StartCoroutine(ResetHit(hitTIme));
         }

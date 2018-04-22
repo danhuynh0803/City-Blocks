@@ -7,7 +7,14 @@ public enum SFX
 {
     Load,
     BallBounce,
-    CarExplodeGlass
+    CarExplodeGlass,
+    Pickup,
+    Speedup,
+    Slowdown,
+    Click,
+    Wrong,
+    ClearBoard,
+    BallFall
 };
 
 public class SoundController : MonoBehaviour {

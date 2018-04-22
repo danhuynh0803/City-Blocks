@@ -10,6 +10,7 @@ public class WordDisplay : MonoBehaviour {
     public float fallSpeed = 20.0f;
     //public float destroyTimer = 30.0f;      // Amount of time before the word disappeared
     public Color textColor = Color.yellow;
+    public float time;
 
     private void Start()
     {
@@ -21,6 +22,12 @@ public class WordDisplay : MonoBehaviour {
     {
         text.text = word;
         shadowText.text = word;
+    }
+
+    public void IncreaseFontSize(int increaseAmount)
+    {
+        text.fontSize += increaseAmount;
+        shadowText.fontSize += increaseAmount;
     }
 
     public void RemoveLetter()

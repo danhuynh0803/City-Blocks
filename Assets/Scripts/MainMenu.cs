@@ -9,8 +9,8 @@ public class MainMenu : MonoBehaviour {
     public GameObject soundMenu;
     public GameObject creditMenu;
     public GameObject loadingScreen;
-    public GameObject soundController;
     public GameObject levelController;
+    public bool isGameMenu;
     [Header("In Game Only")]
     public GameObject pauseMenu;
 
@@ -67,6 +67,7 @@ public class MainMenu : MonoBehaviour {
             //SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
             isPaused = false;
             StartCoroutine(ChangeScene("MainMenu"));
+            SoundController.Play((int)SFX.Load);
         }
     }
 
@@ -75,7 +76,8 @@ public class MainMenu : MonoBehaviour {
         if (loadingScreen != null)
         {
             StartCoroutine(ChangeScene("Stage1"));
-            soundController.GetComponent<AudioSource>().PlayOneShot(soundController.GetComponent<SoundController>().sfxClips[0]);
+            if (isGameMenu)
+                GUISoundController.Play((int)GUISFX.Load);
         }
     }
 
@@ -93,6 +95,7 @@ public class MainMenu : MonoBehaviour {
 
     public void Pause()
     {
+
         if (pauseMenu != null)
         {
             Time.timeScale = 0.0f;
@@ -106,6 +109,7 @@ public class MainMenu : MonoBehaviour {
 
     public void Resume()
     {
+
         if (pauseMenu != null)
         {
             isPaused = false;
@@ -118,6 +122,10 @@ public class MainMenu : MonoBehaviour {
     {
         if (controlMenu != null)
         {
+            if(isGameMenu)
+                GUISoundController.Play((int)GUISFX.Click);
+            else
+                SoundController.Play((int)SFX.Click);
             if (boolean)
                 menuStack.Push(controlMenu);
             else
@@ -129,6 +137,10 @@ public class MainMenu : MonoBehaviour {
     {
         if (soundMenu != null)
         {
+            if (isGameMenu)
+                GUISoundController.Play((int)GUISFX.Click);
+            else
+                SoundController.Play((int)SFX.Click);
             if (boolean)
                 menuStack.Push(soundMenu);
             else
@@ -138,8 +150,10 @@ public class MainMenu : MonoBehaviour {
     }
     public void ToggleCredit(bool boolean)
     {
+        
         if (creditMenu != null)
         {
+            GUISoundController.Play((int)GUISFX.Click);
             if (boolean)
                 menuStack.Push(creditMenu);
             else
@@ -150,6 +164,7 @@ public class MainMenu : MonoBehaviour {
 
     public void ExitGame()
     {
+        GUISoundController.Play((int)GUISFX.Click);
         Application.Quit();
     }
 

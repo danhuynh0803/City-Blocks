@@ -34,7 +34,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973989609631926}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1f73a48be7163dc45b88a478e9aa2b09, type: 3}
@@ -119,13 +119,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c939aa278e1c1d040a26ff83b65c82e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxClips: []
-  masterVolumeSlider: {fileID: 114602117321414804, guid: 8b57e7adcbecd234188a36771305b956,
-    type: 2}
-  bgmVolumeSlider: {fileID: 114643878426165054, guid: 8b57e7adcbecd234188a36771305b956,
-    type: 2}
-  sfxVolumeSlider: {fileID: 114574813957126080, guid: 8b57e7adcbecd234188a36771305b956,
-    type: 2}
+  sfxClips:
+  - {fileID: 8300000, guid: f31d6461cc7bd174aac1e248b5648355, type: 3}
+  - {fileID: 8300000, guid: 51508117298de0342898b295e4e997f2, type: 3}
+  - {fileID: 8300000, guid: e92848bf841a09d489eb897580980b8d, type: 3}
+  - {fileID: 8300000, guid: 55e5ab4789e168d49b5f7f22789e6d88, type: 3}
+  - {fileID: 8300000, guid: 0b4461ef3715bbf44aecf3544c5af0c6, type: 3}
+  - {fileID: 8300000, guid: 4dd28cbdffea2d14f9d84c1f33eac90b, type: 3}
+  masterVolumeSlider: {fileID: 0}
+  bgmVolumeSlider: {fileID: 0}
+  sfxVolumeSlider: {fileID: 0}
 --- !u!224 &224521435022914960
 RectTransform:
   m_ObjectHideFlags: 1
