@@ -22,8 +22,8 @@ public class WordGenerator : MonoBehaviour {
         Word newWord;
 
         // Control color based on what index the word was chosen at
-        // All words from lines 1-15 are green (powerup related awards)
-        if (index < 15)
+        // All words from lines 1-19 are green (powerup related awards)
+        if (index < 20)
             newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.green);
         else
             newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.yellow);

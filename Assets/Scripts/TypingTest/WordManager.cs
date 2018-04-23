@@ -59,9 +59,10 @@ public class WordManager : MonoBehaviour {
         wordList.Add(wordGenerator.GetRandomWord());
     }
 
-    public void AddWord(string newWord)
+    public void AddWord(string newString)
     {
-        wordList.Add(new Word(newWord, wordSpawner.SpawnWord()));
+        Word word = new Word(newString, wordSpawner.SpawnWord(), Color.green);
+        wordList.Add(word);
     }
 
     public void TypeLetter (char letter)

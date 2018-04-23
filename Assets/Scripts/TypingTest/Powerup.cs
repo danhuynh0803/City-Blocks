@@ -56,7 +56,7 @@ public class Powerup : MonoBehaviour {
         //Debug.Log("In Powerup functions");
         if (wordLineNum < 5)
         {
-            Debug.Log("AddLife");
+            //Debug.Log("AddLife");
             white.text = "Life++!";
             black.text = "Life++!";
             white.color = new Color(1.0f, 0f, 0f);
@@ -65,25 +65,25 @@ public class Powerup : MonoBehaviour {
         }
         else if (wordLineNum < 10)
         {
-            Debug.Log("Paddle");
-            white.text = "Size++!";
-            black.text = "Size++!";
-            white.color = new Color(0f, 1.0f, 0f);
-            LengthenPaddle(20f);
-            SoundController.Play((int)SFX.Speedup, 0.1f);
-        }
-        else if (wordLineNum < 15)
-        {
-            Debug.Log("Ballspeed");
+            //Debug.Log("Ballspeed");
             white.text = "Speed--!";
             black.text = "Speed--!";
             white.color = new Color(1.0f, 1.0f, 0f);
             SoundController.Play((int)SFX.Slowdown, 0.1f);
             DecreaseBallSpeedEffect(20f);
         }
+        else if (wordLineNum < 15)
+        {
+            //Debug.Log("Paddle");
+            white.text = "Size++!";
+            black.text = "Size++!";
+            white.color = new Color(0f, 1.0f, 0f);
+            LengthenPaddle(20f);
+            SoundController.Play((int)SFX.Speedup, 0.1f);
+        }
         else if (wordLineNum < 20)
         {
-            Debug.Log("Bumpers");
+            //Debug.Log("Bumpers");
             white.text = "Bumper!";
             black.text = "Bumper!";
             white.color = new Color(0, 1f, 1f);
@@ -93,7 +93,7 @@ public class Powerup : MonoBehaviour {
         else
         {
             DestroyObject(powerUpText);
-            Debug.Log("No powerup associated with this word");
+            //Debug.Log("No powerup associated with this word");
         }
     }
 
@@ -155,12 +155,12 @@ public class Powerup : MonoBehaviour {
     private bool isBumperOn;
     public void ToggleBumper(bool toggle,float time)
     {
-        isBumperOn = toggle;
+        //isBumperOn = toggle;
         bumper.SetActive(toggle);
-        if (toggle)
-            bumperDuration = time;
-        else
-            bumperDuration = time;
+        //if (toggle)
+            //bumperDuration = time;
+        //else
+            //bumperDuration = time;
     }
 
     #endregion
@@ -202,13 +202,14 @@ public class Powerup : MonoBehaviour {
             }
         }
         //bumper buff
-        if(bumperDuration > 0)
+        /**if(bumperDuration > 0)
         {
             bumperDuration -= Time.deltaTime;
         }
         else
             if(isBumperOn)
                 ToggleBumper(false, 0);
+        **/
         //size buff
         if(lengthenDuration > 0)
             lengthenDuration -= Time.deltaTime;

@@ -925,7 +925,8 @@ Prefab:
     - target: {fileID: 114018959356092542, guid: da88d7f14bd3c5943b7967b47dce0905,
         type: 2}
       propertyPath: m_Text
-      value: "Game by Legav, MyAlias, Injured\n\nBGM: \n\nAssets:\n\nAdditional Acknowledgements: "
+      value: "Game by Legav, MyAlias, Injured\n\nAdditional Contributions: Lillith
+        Capulet\n\nBGM: \n\nAssets:\n\nAdditional Acknowledgements: "
       objectReference: {fileID: 0}
     - target: {fileID: 224558572777045028, guid: da88d7f14bd3c5943b7967b47dce0905,
         type: 2}

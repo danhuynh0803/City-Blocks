@@ -82,16 +82,22 @@ public class BallPhysics : MonoBehaviour {
     IEnumerator WaitThenKick(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        GetComponent<TrailRenderer>().enabled = true;
         GetComponent<Rigidbody2D>().velocity = new Vector2(0.2f, -1 * speedY);
     }
-    public void Bounce()
+    public void Bounce(bool isMetal)
     {
-        if(SpawnBlocks.blocksHit % 10 == 0)
+        if(SpawnBlocks.blocksHit % 50 == 0)
             SoundController.Play((int)SFX.CarExplodeGlass, glassVolume);
         else
             SoundController.Play((int)SFX.BallBounce, ballBounceVolume);
-        //rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
+
+        if (isMetal)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
+        }
     }
+
     public void Bounce(float radian)
     {
         SoundController.Play((int)SFX.BallBounce, ballBounceVolume);
@@ -138,7 +144,10 @@ public class BallPhysics : MonoBehaviour {
             {
                 levelController.GetComponent<LevelController>().LoseLife(1);
                 levelController.GetComponent<LevelController>().SetLifeText();
+                // Restart score multiplier when ball is lost
+                ScoreController.resetMultiplier();
                 RespawnBall();
+                GetComponent<TrailRenderer>().enabled = false;
             }
 
         }

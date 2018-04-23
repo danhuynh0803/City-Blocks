@@ -13,11 +13,16 @@ public class TopWallPhysics : MonoBehaviour {
         if (collision.gameObject.tag == "Ball" && !isHitted)
         {
             if(isBottom)
+            {
                 collision.gameObject.GetComponent<BallPhysics>().BounceUp();
+                gameObject.SetActive(false);
+            }
             else
+            {
                 collision.gameObject.GetComponent<BallPhysics>().BounceDown();
-            isHitted = true;
-            StartCoroutine(ResetHit(hitTIme));
+                isHitted = true;
+                StartCoroutine(ResetHit(hitTIme));
+            }
         }
     }
     IEnumerator ResetHit(float hitTime)

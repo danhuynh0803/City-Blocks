@@ -12,7 +12,7 @@ public class Word
     
     public WordDisplay display;
     public Color color;
-    public int points = 200;
+    public int points = 0;
 
     public Word(string word, WordDisplay display, Color color)
     {
