@@ -7,8 +7,8 @@ public class WordSpawner : MonoBehaviour {
     public GameObject wordPrefab;
     public Transform wordCanvas;
 
-    public float firstWordDelay = 10.0f;
-    public float spawnDelay = 5.0f;
+    public float firstWordDelay = 7.0f;
+    public float spawnDelay = 4.0f;
     private float timeStamp = 0.0f;
     public float spawnDecreaseFactor = 0.97f;
     public float horizontalOffset;  // Offset amount from center
@@ -40,7 +40,7 @@ public class WordSpawner : MonoBehaviour {
         if (Time.time >= timeStamp)
         {
             wordManager.AddWord();
-            spawnDelay = Mathf.Clamp(spawnDelay*spawnDecreaseFactor, 4.0f, spawnDelay);
+            spawnDelay = Mathf.Clamp(spawnDelay*spawnDecreaseFactor, 3.0f, spawnDelay);
             timeStamp = Time.time + spawnDelay;
             
             //spawnDelay *= spawnDecreaseFactor;

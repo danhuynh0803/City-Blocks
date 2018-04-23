@@ -69,7 +69,7 @@ public class Powerup : MonoBehaviour {
             white.text = "Speed--!";
             black.text = "Speed--!";
             white.color = new Color(1.0f, 1.0f, 0f);
-            SoundController.Play((int)SFX.Slowdown, 0.1f);
+            SoundController.Play((int)SFX.Brakes, 0.1f);
             DecreaseBallSpeedEffect(20f);
         }
         else if (wordLineNum < 15)

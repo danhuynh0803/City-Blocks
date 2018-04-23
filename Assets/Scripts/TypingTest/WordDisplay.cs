@@ -12,8 +12,17 @@ public class WordDisplay : MonoBehaviour {
     public Color textColor = Color.yellow;
     public float time;
 
+    public bool isScary;
+
+    public Font normalFont;
+    public Font scaryFont;
+
     private void Start()
     {
+        if (isScary)
+        {
+            text.font = scaryFont;
+        }
         //Destroy(this.gameObject, destroyTimer);
     }
 

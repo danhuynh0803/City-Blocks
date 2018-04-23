@@ -21,7 +21,7 @@ public class ScoreController : MonoBehaviour
     {
         score = 0;
         scoreMultiplier = 1;
-        highscore = 11151980;   // Win condition score
+        highscore = 11151992;   // Win condition score
         //highscore = 5;        // For testing win condition
     }
 

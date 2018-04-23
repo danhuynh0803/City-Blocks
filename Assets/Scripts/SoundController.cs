@@ -14,7 +14,8 @@ public enum SFX
     Click,
     Wrong,
     ClearBoard,
-    BallFall
+    BallFall,
+    Brakes
 };
 
 public class SoundController : MonoBehaviour {

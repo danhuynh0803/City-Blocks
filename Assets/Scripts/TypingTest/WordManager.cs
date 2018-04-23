@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WordManager : MonoBehaviour {
@@ -9,8 +10,8 @@ public class WordManager : MonoBehaviour {
 
     private WordSpawner wordSpawner;
     private WordGenerator wordGenerator;
-
-    private Word activeWord;
+    [SerializeField]
+    private List<Word> activeWord;
     private bool hasActiveWord;
     private bool hasMultiplierChain;
 
@@ -18,6 +19,7 @@ public class WordManager : MonoBehaviour {
 
     void Start()
     {
+        activeWord = new List<Word>();
         wordSpawner = FindObjectOfType<WordSpawner>();
         wordGenerator = FindObjectOfType<WordGenerator>();
         powerupController = FindObjectOfType<Powerup>();
@@ -40,13 +42,15 @@ public class WordManager : MonoBehaviour {
             Word firstWord = wordList[0];
             if (firstWord.display.transform.position.y < killLayer.position.y)
             {
-                if (firstWord == activeWord)
-                    RemoveActiveWord();
-                else
+                foreach (Word word in activeWord.ToList())
                 {
-                    firstWord.display.RemoveWord();
-                    wordList.Remove(firstWord);
+                    if (firstWord == word)
+                    {
+                        activeWord.Remove(word);
+                    }
                 }
+                firstWord.display.RemoveWord();
+                wordList.Remove(firstWord);
 
                 // Missed a word so reset the multiplier back to one
                 ScoreController.resetMultiplier();
@@ -69,63 +73,63 @@ public class WordManager : MonoBehaviour {
     {
         if (!letter.Equals('[') && !letter.Equals(']'))
         {
-            if (hasActiveWord)
+            List<Word> Removingwords = new List<Word>();
+            if (activeWord.Count>0)
             {
-                // Check if the letter is next
-                if (char.ToLower(activeWord.GetNextLetter()) == char.ToLower(letter))
+                foreach (Word active in activeWord.ToList())
                 {
-                    activeWord.IncrementTypeIndex();
-                    //Debug.Log(activeWord.WordTyped());
-                    if (activeWord.WordTyped())
+                    // Check if the letter is next
+                    if (char.ToLower(active.GetNextLetter()) == char.ToLower(letter))
                     {
-                        ScoreController.hasChain = true;
-                        if (!hasMultiplierChain)
+                        active.IncrementTypeIndex();
+                        //Debug.Log(activeWord.WordTyped());
+                        if (active.WordTyped())
                         {
-                            hasMultiplierChain = true; // Start chaining the words for multiplier                        
+                            ScoreController.hasChain = true;
+                            if (!hasMultiplierChain)
+                            {
+                                hasMultiplierChain = true; // Start chaining the words for multiplier                        
+                            }
+                            else
+                            {
+                                ScoreController.incrementMultiplier();
+                            }
+                            //ScoreController.incrementScore(activeWord.points);
+                            RemoveActiveWord(active);
                         }
-                        else
-                        {
-                            ScoreController.incrementMultiplier();
-                        }
-                        //ScoreController.incrementScore(activeWord.points);
-                        RemoveActiveWord();
+                    }
+                    // Change text to red to indicate incorrect letter
+                    else
+                    {
+                        active.display.SetIncorrectColor();
+                        SoundController.Play((int)SFX.Wrong);
                     }
                 }
-                // Change text to red to indicate incorrect letter
-                else
-                {
-                    activeWord.display.SetIncorrectColor();
-                    SoundController.Play((int)SFX.Wrong);
-                }
-
             }
-            else
+            foreach (Word word in wordList)
             {
-                foreach (Word word in wordList)
+                // Find the next active word
+                if (char.ToLower(word.GetNextLetter()) == char.ToLower(letter))
                 {
-                    // Find the next active word
-                    if (char.ToLower(word.GetNextLetter()) == char.ToLower(letter))
+                    if(!activeWord.Contains(word))
                     {
-                        activeWord = word;
-                        activeWord.display.IncreaseFontSize(10);
-                        hasActiveWord = true;
+                        activeWord.Add(word);
+                        word.display.IncreaseFontSize(10);
                         word.IncrementTypeIndex();
-                        break;
                     }
                 }
             }
         }
     }
 
-    private void RemoveActiveWord()
+    private void RemoveActiveWord(Word active)
     {
-        hasActiveWord = false;
-
+        activeWord.Remove(active);
         // Active the powerup for that word
-        powerupController.ActivatePowerup(activeWord.lineNumFunction, activeWord); // pass the index
-        ScoreController.incrementScore(activeWord.points);  // Get points for typing the word correctly
-        activeWord.display.RemoveWord();
-        wordList.Remove(activeWord);
+        powerupController.ActivatePowerup(active.lineNumFunction, active); // pass the index
+        ScoreController.incrementScore(active.points);  // Get points for typing the word correctly
+        active.display.RemoveWord();
+        wordList.Remove(active);
     }
   
 }
