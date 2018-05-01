@@ -58,10 +58,6 @@ public class LevelController : MonoBehaviour {
         {
 			//DisplayFinalText (hasUpdatedScore);
 		}
-        if (ScoreController.isHighScore())
-        {
-            Win();
-        }
 	}
 	
 	public void Respawn() 

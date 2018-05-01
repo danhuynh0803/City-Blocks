@@ -10,6 +10,10 @@ public class WordGenerator : MonoBehaviour {
 
     private WordSpawner wordSpawner;
 
+    private static int scaryWordIndex = 20;
+    public static int scaryWordScoreShift = 1300000;
+    private int scaryWordScore = scaryWordScoreShift;
+    
     private void Awake()
     {
         ParseWordFile();
@@ -23,11 +27,31 @@ public class WordGenerator : MonoBehaviour {
 
         // Control color based on what index the word was chosen at
         // All words from lines 1-19 are green (powerup related awards)
-        if (index < 20)
-            newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.green);
-        else if (index < )
-        else
-            newWord = new Word(stringList[index], wordSpawner.SpawnWord(), Color.yellow);
+
+        // Check if the Score has reached a certain threshold, then spawn a scary word
+        if (ScoreController.isHighScore())
+        {
+            // Use only the final word
+            ScoreController.updateHighScore();
+            newWord = new Word("Remember?", wordSpawner.SpawnWord());
+            newWord.display.IncreaseFontSize((int)(Random.Range(-0.2f, 1.0f) * 30));
+            newWord.display.isScary = true;
+            newWord.display.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(-45f, 45f)));
+            return newWord;
+        }
+        else if (ScoreController.getScore() >= scaryWordScore)
+        {
+            newWord = new Word(stringList[scaryWordIndex++], wordSpawner.SpawnWord());
+            newWord.display.isScary = true;
+            scaryWordScore += scaryWordScoreShift;
+            return newWord;
+        }
+
+        newWord = new Word(stringList[index], wordSpawner.SpawnWord());
+        if (index >= 20 && index < 28)
+        {           
+            newWord.display.isScary = true;
+        }
 
         // Set the line number of the word within the dictionary file
         // for use in determining what words have powerups (to replace with function pointers)

@@ -66,7 +66,6 @@ public class BallPhysics : MonoBehaviour {
     void Start () {
         rigidBody = GetComponent<Rigidbody2D>();
         Kick();
-        Radian = 
         InitalSpeedX = speedX;
         InitalSpeedY = speedY;
     }
@@ -85,7 +84,7 @@ public class BallPhysics : MonoBehaviour {
         GetComponent<TrailRenderer>().enabled = true;
         GetComponent<Rigidbody2D>().velocity = new Vector2(0.2f, -1 * speedY);
     }
-    public void Bounce(bool isMetal)
+    public void Bounce(bool isMetal,float blockX, float bound)
     {
         if(SpawnBlocks.blocksHit % 50 == 0)
             SoundController.Play((int)SFX.CarExplodeGlass, glassVolume);
@@ -94,7 +93,10 @@ public class BallPhysics : MonoBehaviour {
 
         if (isMetal)
         {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
+            if(blockX - bound >= transform.position.x|| blockX + bound <= transform.position.x)
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x * -1, rigidBody.velocity.y );
+            else
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * -1);
         }
     }
 
@@ -102,6 +104,7 @@ public class BallPhysics : MonoBehaviour {
     {
         SoundController.Play((int)SFX.BallBounce, ballBounceVolume);
         rigidBody.velocity = new Vector2(speedX * Mathf.Cos(radian), rigidBody.velocity.y * -1);
+
     }
     public void BounceDown()
     {
@@ -125,7 +128,7 @@ public class BallPhysics : MonoBehaviour {
     }
     public void RespawnBall()
     {
-        SoundController.Play((int)SFX.BallFall, 0.1f);
+        SoundController.Play((int)SFX.BallFall, 0.7f);
         GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
         if (paddle == null)
             paddle = GameObject.Find("PlayerPaddle");

@@ -54,7 +54,7 @@ public class Powerup : MonoBehaviour {
         Text white = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().white;
         Text black = powerUpText.GetComponent<PowerUpJumpOutTextAnimation>().black;
         //Debug.Log("In Powerup functions");
-        if (wordLineNum < 5)
+        if (wordLineNum < 6)
         {
             //Debug.Log("AddLife");
             white.text = "Life++!";
@@ -63,7 +63,7 @@ public class Powerup : MonoBehaviour {
             SoundController.Play((int)SFX.Pickup, 0.1f);
             AddLife(word);
         }
-        else if (wordLineNum < 10)
+        else if (wordLineNum < 11)
         {
             //Debug.Log("Ballspeed");
             white.text = "Speed--!";
@@ -72,7 +72,7 @@ public class Powerup : MonoBehaviour {
             SoundController.Play((int)SFX.Brakes, 0.1f);
             DecreaseBallSpeedEffect(20f);
         }
-        else if (wordLineNum < 15)
+        else if (wordLineNum < 17)
         {
             //Debug.Log("Paddle");
             white.text = "Size++!";
@@ -81,7 +81,7 @@ public class Powerup : MonoBehaviour {
             LengthenPaddle(20f);
             SoundController.Play((int)SFX.Speedup, 0.1f);
         }
-        else if (wordLineNum < 20)
+        else if (wordLineNum < 22)
         {
             //Debug.Log("Bumpers");
             white.text = "Bumper!";

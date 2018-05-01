@@ -144,6 +144,10 @@ MonoBehaviour:
   shadowText: {fileID: 114370120276570908}
   fallSpeed: 30
   textColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  time: 0
+  isScary: 0
+  normalFont: {fileID: 12800000, guid: f9a8e06a8eece5d4386725149b2ac1b2, type: 3}
+  scaryFont: {fileID: 12800000, guid: 775d62d68aaf3d24cb4e5f65e5dc9ce8, type: 3}
 --- !u!222 &222333900949038764
 CanvasRenderer:
   m_ObjectHideFlags: 1

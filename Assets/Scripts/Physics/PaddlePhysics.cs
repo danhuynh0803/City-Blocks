@@ -17,7 +17,14 @@ public class PaddlePhysics : MonoBehaviour {
             float angle = GetOffset(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
             collision.gameObject.GetComponent<BallPhysics>().Bounce(angle);
             isHitted = true;
-            StartCoroutine(ResetHit(hitTIme));
+            //StartCoroutine(ResetHit(hitTIme));
+        }
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ball" && isHitted)
+        {
+            isHitted = false;
         }
     }
     void Update()

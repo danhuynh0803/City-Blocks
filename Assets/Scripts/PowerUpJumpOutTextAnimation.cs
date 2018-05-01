@@ -10,10 +10,12 @@ public class PowerUpJumpOutTextAnimation : MonoBehaviour {
     float fadeOutTime;
     public Text white;
     public Text black;
+    public bool isNewHighScore;
 
     void Start()
     {
-        DestroyObject(gameObject, 5f);
+        if(!isNewHighScore)
+            DestroyObject(gameObject, 5f);
     }
 
     void Update () {

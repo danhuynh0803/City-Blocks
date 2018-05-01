@@ -37,7 +37,7 @@ public class BlockPhysics : MonoBehaviour {
         if (collision.gameObject.tag == "Ball" && !isHitted)
         {
             SpawnBlocks.BlockHit();
-            collision.gameObject.GetComponent<BallPhysics>().Bounce(isMetal);
+            collision.gameObject.GetComponent<BallPhysics>().Bounce(isMetal, transform.position.x, GetComponent<SpriteRenderer>().bounds.size.x/2);
             ScoreController.incrementScore(score);
             isHitted = true;
             // Kill block only if its not metal

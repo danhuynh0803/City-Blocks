@@ -15,11 +15,15 @@ public class WordManager : MonoBehaviour {
     private bool hasActiveWord;
     private bool hasMultiplierChain;
 
+    private string finalWord = "Remember?";
+
     private Powerup powerupController;
+    private LevelController levelController;
 
     void Start()
     {
         activeWord = new List<Word>();
+        levelController = FindObjectOfType<LevelController>();
         wordSpawner = FindObjectOfType<WordSpawner>();
         wordGenerator = FindObjectOfType<WordGenerator>();
         powerupController = FindObjectOfType<Powerup>();
@@ -40,22 +44,39 @@ public class WordManager : MonoBehaviour {
         {
             // Check if the first word is out of bounds 
             Word firstWord = wordList[0];
-            if (firstWord.display.transform.position.y < killLayer.position.y)
+            if(firstWord !=null)
             {
-                foreach (Word word in activeWord.ToList())
+                if (firstWord.display.transform.position.y < killLayer.position.y)
                 {
-                    if (firstWord == word)
+                    foreach (Word word in activeWord.ToList())
                     {
-                        activeWord.Remove(word);
+                        if (firstWord == word)
+                        {
+                            activeWord.Remove(word);
+                        }
                     }
+                    firstWord.display.RemoveWord();
+                    wordList.Remove(firstWord);
+                    firstWord = null;
+                    // Missed a word so reset the multiplier back to one
+                    ScoreController.resetMultiplier();
                 }
-                firstWord.display.RemoveWord();
-                wordList.Remove(firstWord);
-
-                // Missed a word so reset the multiplier back to one
-                ScoreController.resetMultiplier();
-            }     
-        }        
+            }
+        }   
+        
+        // Check if player reached win condition
+        if (ScoreController.isHighScore())
+        {
+            foreach (Word word in wordList.ToList())
+            {
+                if (!word.word.Equals(finalWord))
+                {
+                    word.display.RemoveWord();
+                    wordList.Remove(word);
+                }
+            }
+            hasActiveWord = false;
+        }
     }
 
     public void AddWord()
@@ -65,7 +86,7 @@ public class WordManager : MonoBehaviour {
 
     public void AddWord(string newString)
     {
-        Word word = new Word(newString, wordSpawner.SpawnWord(), Color.green);
+        Word word = new Word(newString, wordSpawner.SpawnWord());
         wordList.Add(word);
     }
 
@@ -85,6 +106,10 @@ public class WordManager : MonoBehaviour {
                         //Debug.Log(activeWord.WordTyped());
                         if (active.WordTyped())
                         {
+                            if (active.word.Equals(finalWord))
+                            {
+                                levelController.Win();
+                            }
                             ScoreController.hasChain = true;
                             if (!hasMultiplierChain)
                             {
@@ -102,7 +127,7 @@ public class WordManager : MonoBehaviour {
                     else
                     {
                         active.display.SetIncorrectColor();
-                        SoundController.Play((int)SFX.Wrong);
+                        //SoundController.Play((int)SFX.Wrong);
                     }
                 }
             }

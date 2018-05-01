@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System;
 
 public class ScoreController : MonoBehaviour
 {
@@ -14,6 +17,8 @@ public class ScoreController : MonoBehaviour
     public Text highscoreShadowText;
     public Text scoreMultiplierText;
     public Text scoreMultiplierShadowText;
+    private static GameObject newHighScoreT;
+    public GameObject newHighScoreText;
 
     public static bool hasChain;
 
@@ -21,16 +26,22 @@ public class ScoreController : MonoBehaviour
     {
         score = 0;
         scoreMultiplier = 1;
-        highscore = 11151992;   // Win condition score
-        //highscore = 5;        // For testing win condition
+        //highscore = 100;
+        highscore = 5151992;
+        //Load();
+        // For testing win condition
     }
+    void Start()
+    {
+        newHighScoreT = newHighScoreText;
 
+    }
     void Update()
     {
         scoreText.text = "Score: " + score;               
         scoreShadowText.text = "Score: " + score;         
-        highscoreText.text = "High Score: " + highscore;       
-        highscoreShadowText.text = "High Score: " + highscore;  
+        highscoreText.text = "Goal: 0" + highscore;       
+        highscoreShadowText.text = "Goal: 0" + highscore;  
 
         if (!hasChain)
         {
@@ -87,7 +98,46 @@ public class ScoreController : MonoBehaviour
 
     public static void updateHighScore()
     {
+        //Save(score);
         highscore = score;
+        if (newHighScoreT.gameObject != null)
+            newHighScoreT.gameObject.SetActive(true);
+    }
+    public static void Save(int highScore)
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream saveFile = File.Create(Application.persistentDataPath + "/LD41PlayerInfo.dat");
+        PlayerData data = new PlayerData(highScore);
+        bf.Serialize(saveFile, data);
+        saveFile.Close();
+    }
+    public static void Load()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        try
+        {
+            FileStream saveFile = File.Open(Application.persistentDataPath + "/LD41PlayerInfo.dat", FileMode.Open);
+            PlayerData data = (PlayerData)bf.Deserialize(saveFile);
+            saveFile.Close();
+            if (data.highScore > highscore)
+            {
+                highscore = data.highScore;
+            }
+        }
+        catch(FileNotFoundException e)
+        {
+            Debug.Log("not found");
+            Save(0);
+        }
+    }
+}
+[Serializable]
+public class PlayerData
+{
+    public int highScore; 
+    public PlayerData(int highScore)
+    {
+        this.highScore = highScore;
     }
 }
 

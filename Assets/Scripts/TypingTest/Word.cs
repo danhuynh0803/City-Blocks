@@ -22,7 +22,7 @@ public class Word
         // For displaying the word in game
         this.display = display;
         display.SetWordText(word);
-        display.textColor = color;
+        display.text.color = color;
     }
 
     public Word (string word, WordDisplay display)
