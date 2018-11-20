@@ -40,7 +40,8 @@ public class WordSpawner : MonoBehaviour {
         if (Time.time >= timeStamp)
         {
             wordManager.AddWord();
-            spawnDelay = Mathf.Clamp(spawnDelay*spawnDecreaseFactor, 3.0f, spawnDelay);
+            if(!GameModeController.isQuickMode)
+                spawnDelay = Mathf.Clamp(spawnDelay * spawnDecreaseFactor, 3.0f, spawnDelay);
             timeStamp = Time.time + spawnDelay;
             
             //spawnDelay *= spawnDecreaseFactor;

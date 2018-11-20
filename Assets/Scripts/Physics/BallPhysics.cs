@@ -141,18 +141,20 @@ public class BallPhysics : MonoBehaviour {
         {
             if(levelController.GetComponent<LevelController>().Life <= 0)
             {
-                levelController.GetComponent<LevelController>().GameOver();
+                // Disable lives if in challenge mode
+                if (GameController.level != (int)GameController.Level.challenge)
+                {
+                    levelController.GetComponent<LevelController>().GameOver();
+                }
             }
-            else
-            {
-                levelController.GetComponent<LevelController>().LoseLife(1);
-                levelController.GetComponent<LevelController>().SetLifeText();
-                // Restart score multiplier when ball is lost
-                ScoreController.resetMultiplier();
-                RespawnBall();
-                GetComponent<TrailRenderer>().enabled = false;
-            }
-
+           
+          
+            levelController.GetComponent<LevelController>().LoseLife(1);
+            levelController.GetComponent<LevelController>().SetLifeText();
+            // Restart score multiplier when ball is lost
+            ScoreController.resetMultiplier();
+            RespawnBall();
+            GetComponent<TrailRenderer>().enabled = false;           
         }
         
     }

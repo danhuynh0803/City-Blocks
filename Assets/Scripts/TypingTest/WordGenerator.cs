@@ -29,32 +29,40 @@ public class WordGenerator : MonoBehaviour {
         // All words from lines 1-19 are green (powerup related awards)
 
         // Check if the Score has reached a certain threshold, then spawn a scary word
-        if (ScoreController.isHighScore())
+        if (GameController.level == (int)GameController.Level.story)
         {
-            // Use only the final word
-            ScoreController.updateHighScore();
-            newWord = new Word("Remember?", wordSpawner.SpawnWord());
-            newWord.display.IncreaseFontSize((int)(Random.Range(-0.2f, 1.0f) * 30));
-            newWord.display.isScary = true;
-            newWord.display.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(-45f, 45f)));
-            return newWord;
-        }
-        else if (ScoreController.getScore() >= scaryWordScore)
-        {
-            newWord = new Word(stringList[scaryWordIndex++], wordSpawner.SpawnWord());
-            newWord.display.isScary = true;
-            scaryWordScore += scaryWordScoreShift;
-            return newWord;
+            if (ScoreController.isHighScore())
+            {
+                // Use only the final word
+                ScoreController.UpdateHighScore();
+                newWord = new Word("Remember?", wordSpawner.SpawnWord());
+                newWord.display.IncreaseFontSize((int)(Random.Range(-0.2f, 1.0f) * 30));
+                newWord.display.isScary = true;
+                newWord.display.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(-45f, 45f)));
+                return newWord;
+            }
+            else if (ScoreController.getScore() >= scaryWordScore)
+            {
+                newWord = new Word(stringList[scaryWordIndex++], wordSpawner.SpawnWord());
+                newWord.display.isScary = true;
+                scaryWordScore += scaryWordScoreShift;
+                return newWord;
+            }
         }
 
         newWord = new Word(stringList[index], wordSpawner.SpawnWord());
-        if (index >= 20 && index < 28)
-        {           
-            newWord.display.isScary = true;
+
+        if (GameController.level == (int)GameController.Level.story)
+        {
+            if (index >= 20 && index < 28)
+            {
+                newWord.display.isScary = true;
+            }
+            newWord.lineNumFunction = index;
         }
 
         // Set the line number of the word within the dictionary file
-        // for use in determining what words have powerups (to replace with function pointers)
+        // for use in determining what words have powerups (to replace with function pointers) 
         newWord.lineNumFunction = index;
 
         return newWord;

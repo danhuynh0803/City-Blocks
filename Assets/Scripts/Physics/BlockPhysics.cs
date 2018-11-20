@@ -7,7 +7,10 @@ public class BlockPhysics : MonoBehaviour {
     public Block block;
     bool isHitted;
     public int score;
-    public float fallSpeed = 25f;
+    //remeber to change this under prefab not here
+    //metal block too
+    public float fallSpeed = 0.2f;
+    public float fallSpeedQuickMode = 2f;
     private GameObject killLayer;
     public bool isMetal; // will deflect the ball and indestructable
     public Sprite metalSprite;
@@ -16,6 +19,8 @@ public class BlockPhysics : MonoBehaviour {
     
     void Start()
     {
+        if (GameModeController.isQuickMode)
+            fallSpeed = fallSpeedQuickMode;
         killLayer = GameObject.FindGameObjectWithTag("KillBlockLayer");
         block = new Block(transform.position.x, transform.position.y);
     }
@@ -23,7 +28,6 @@ public class BlockPhysics : MonoBehaviour {
     private void Update()
     {        
         transform.Translate(0f, -fallSpeed * Time.deltaTime, 0f);
-
         // Kill the block if it falls below the kill layer
         if (transform.position.y < killLayer.transform.position.y)
         {

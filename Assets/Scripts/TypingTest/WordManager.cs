@@ -65,7 +65,7 @@ public class WordManager : MonoBehaviour {
         }   
         
         // Check if player reached win condition
-        if (ScoreController.isHighScore())
+        if (ScoreController.isHighScore() && (GameController.level == (int)GameController.Level.story))
         {
             foreach (Word word in wordList.ToList())
             {

@@ -8,6 +8,7 @@ public class WordDisplay : MonoBehaviour {
     public Text text;
     public Text shadowText;
     public float fallSpeed = 20.0f;
+    public float fallSpeedQuickMode = 100f;
     //public float destroyTimer = 30.0f;      // Amount of time before the word disappeared
     public Color textColor = Color.white;
     public float time;
@@ -22,6 +23,8 @@ public class WordDisplay : MonoBehaviour {
 
     private void Start()
     {
+        if (GameModeController.isQuickMode)
+            fallSpeed = fallSpeedQuickMode;
         if (isScary)
         {
             text.font = scaryFont;        
